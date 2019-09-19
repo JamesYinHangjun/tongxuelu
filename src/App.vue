@@ -89,7 +89,7 @@
           </el-form-item>
           <el-form-item label="生日">
             <el-date-picker
-              v-model="user.birthday"
+              v-model="objUser.birthday"
               type="date"
               placeholder="请输入生日"
               format="yyyy 年 MM 月 dd 日"
@@ -126,7 +126,7 @@ export default {
         name: '王小虎',
         gender: '男',
         birthday: '2016-05-04',
-        phoneNum: 15683330121
+        phoneNum: 15683399789
       },
       {
         name: '王小虎',
@@ -147,7 +147,7 @@ export default {
         birthday: '',
         phoneNum: ''
       },
-      index: ''
+      index: 0
     }
   },
   methods: {
@@ -202,34 +202,39 @@ export default {
     // 删除方法
     delUser(index) {
        // Dialog对话框
-       this.$confirm('确认删除？')
-          .then(_ => {
-            // done();
-            this.tableData.splice(index,1)
-          })
-          .catch(_ => {});
-      },
-      editUser(user,index) {
-        this.index = index
-        // 点击编辑按钮，会显示出编辑对话框
-        this.dialogVisible = true
-        // 这么做是 当 点击修改按钮出现对话框时，原来的内容会显示
-        this.objUser = {
-          name: user.name,
-          gender: user.gender,
-          birthday: user.birthday,
-          phoneNum: user.phoneNum
-        }
-      },
-      // 修改数据
-      confirm() {
-        // 修改数组数据
-        this.$set(this.tableData, this.index, this.objUser)
-        this.dialogVisible = false
-      },
-      handleClose() {
-        this.dialogVisible = false
+      this.$confirm('确认删除？')
+        .then(_ => {
+          // done();
+          this.tableData.splice(index,1)
+        })
+        .catch(_ => {});
+    },
+    editUser(user,index) {
+      this.index = index
+      // 点击编辑按钮，会显示出编辑对话框
+      this.dialogVisible = true
+      // 这么做是 当 点击修改按钮出现对话框时，原来的内容会显示
+      this.objUser = {
+        name: user.name,
+        gender: user.gender,
+        birthday: user.birthday,
+        phoneNum: user.phoneNum
       }
+    },
+    // 修改数据
+    confirm() {
+      // 修改数组数据
+      // Vue.$set(要修改的数据)
+      this.$set(this.tableData, this.index, this.objUser)
+      this.dialogVisible = false
+      this.$message({
+        message: '数据修改成功!',
+        type: 'success'
+      })
+    },
+    handleClose() {
+      this.dialogVisible = false
+    }
     }
     
   }
